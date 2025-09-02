@@ -1,0 +1,62 @@
+[
+    {
+        "id": "0",
+        "tenantId": "0",
+        "name": "iPhone 14 charging",
+        "namePlural": "iPhone 14 chargings",
+        "Wh": 12.68,
+        "_rid": "rdhqANs8JEUBAAAAAAAAAA==",
+        "_self": "dbs/rdhqAA==/colls/rdhqANs8JEU=/docs/rdhqANs8JEUBAAAAAAAAAA==/",
+        "_etag": "\"1b01343b-0000-1600-0000-685846ff0000\"",
+        "_attachments": "attachments/",
+        "_ts": 1750615807
+    },
+    {
+        "id": "2",
+        "tenantId": "0",
+        "name": "Minute working on a laptop",
+        "namePlural": "Minutes working on a laptop",
+        "Wh": 0.75,
+        "_rid": "rdhqANs8JEUEAAAAAAAAAA==",
+        "_self": "dbs/rdhqAA==/colls/rdhqANs8JEU=/docs/rdhqANs8JEUEAAAAAAAAAA==/",
+        "_etag": "\"1b010e4c-0000-1600-0000-68584a030000\"",
+        "_attachments": "attachments/",
+        "_ts": 1750616579
+    },
+    {
+        "id": "1",
+        "tenantId": "0",
+        "name": "Minute powering a fridge",
+        "namePlural": "Minutes powering a fridge",
+        "Wh": 0.21,
+        "_rid": "rdhqANs8JEUFAAAAAAAAAA==",
+        "_self": "dbs/rdhqAA==/colls/rdhqANs8JEU=/docs/rdhqANs8JEUFAAAAAAAAAA==/",
+        "_etag": "\"1c01dbdd-0000-1600-0000-68586d100000\"",
+        "_attachments": "attachments/",
+        "_ts": 1750625552
+    },
+    {
+        "id": "3",
+        "tenantId": "0",
+        "name": "LED spot approx. 500lm (1h)",
+        "namePlural": "LED spots approx. 500lm (1h)",
+        "Wh": 6,
+        "_rid": "rdhqANs8JEUGAAAAAAAAAA==",
+        "_self": "dbs/rdhqAA==/colls/rdhqANs8JEU=/docs/rdhqANs8JEUGAAAAAAAAAA==/",
+        "_etag": "\"1b01513b-0000-1600-0000-6858470b0000\"",
+        "_attachments": "attachments/",
+        "_ts": 1750615819
+    },
+    {
+        "id": "4",
+        "tenantId": "0",
+        "name": "Minute PlayStation 5 gaming",
+        "namePlural": "Minutes PlayStation 5 gaming",
+        "Wh": 3.5,
+        "_rid": "rdhqANs8JEUHAAAAAAAAAA==",
+        "_self": "dbs/rdhqAA==/colls/rdhqANs8JEU=/docs/rdhqANs8JEUHAAAAAAAAAA==/",
+        "_etag": "\"1b01d546-0000-1600-0000-685849150000\"",
+        "_attachments": "attachments/",
+        "_ts": 1750616341
+    }
+]

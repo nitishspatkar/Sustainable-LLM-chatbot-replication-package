@@ -1,0 +1,32 @@
+{
+  "energyEfficient": {
+    "chatMode": 0,
+    "name": "Energy Efficient Mode",
+    "icon": "energy_savings_leaf",
+    "modelName": "gpt-4.1-nano",
+    "historyLimit": 2,
+    "alphaWhPerInputToken": 0.00007,
+    "betaWhPerOutputToken": 0.00021,
+    "zetaConstWh": 0.025
+  },
+  "balanced": {
+    "chatMode": 1,
+    "name": "Balanced Mode",
+    "icon": "balance",
+    "modelName": "gpt-4o-mini",
+    "historyLimit": 5,
+    "alphaWhPerInputToken": 0.0001,
+    "betaWhPerOutputToken": 0.0003,
+    "zetaConstWh": 0.03
+  },
+  "performance": {
+    "chatMode": 2,
+    "name": "Performance Mode",
+    "icon": "speed",
+    "modelName": "gpt-4o",
+    "historyLimit": 10,
+    "alphaWhPerInputToken": 0.00017,
+    "betaWhPerOutputToken": 0.00051,
+    "zetaConstWh": 0.03
+  }
+}
