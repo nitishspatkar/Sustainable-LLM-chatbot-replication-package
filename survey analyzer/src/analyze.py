@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-from visualize import create_horizontal_bar_chart, create_stacked_horizontal_bar_chart, process_multiple_choice_responses
+from visualize import create_horizontal_bar_chart, create_stacked_horizontal_bar_chart, create_environmental_preferences_stacked_chart, process_multiple_choice_responses
 
 def clean_likert_responses(df, column):
     """
@@ -261,6 +261,45 @@ def analyze_survey_data(excel_path, output_dir):
             except KeyError as e:
                 print(f"Error: Column '{question['column']}' not found in the data")
                 print(f"Available columns: {', '.join(df.columns)}")
+    
+    # Create combined environmental preferences chart (only questions with same Likert scale)
+    print("\nCreating combined environmental preferences chart...")
+    environmental_questions = [
+        {
+            'column': 'Would you like LLM chatbots to provide an "Eco Mode" that reduces computational power for less demanding queries?',
+            'title': 'Support for Eco Mode Feature'
+        },
+        {
+            'column': 'Would you prefer to use an LLM chatbot that demonstrates a smaller carbon footprint, even if it is slower or less feature-rich?',
+            'title': 'Willingness to Accept Performance Trade-offs'
+        },
+        {
+            'column': 'If such usage information was provided, would it influence how you use LLM chatbots? ',
+            'title': 'Behavioral Change from Energy Transparency'
+        }
+    ]
+    
+    # Collect data for all environmental questions
+    environmental_data = {}
+    for question in environmental_questions:
+        try:
+            data = clean_likert_responses(df, question['column'])
+            environmental_data[question['title']] = data
+            print(f"  - {question['title']}: {sum(data.values)} responses")
+        except KeyError as e:
+            print(f"  - Error: Column '{question['column']}' not found")
+    
+    # Create the combined chart
+    if environmental_data:
+        combined_output_path = os.path.join(output_dir, 'environmental/environmental_preferences_combined.png')
+        create_environmental_preferences_stacked_chart(
+            environmental_data, 
+            'Environmental Preferences Comparison', 
+            combined_output_path
+        )
+        print(f"Created combined environmental preferences chart: {combined_output_path}")
+    else:
+        print("No environmental data found for combined chart")
 
 def main():
     # Define paths

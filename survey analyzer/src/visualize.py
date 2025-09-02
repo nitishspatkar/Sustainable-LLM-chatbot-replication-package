@@ -223,6 +223,135 @@ def create_horizontal_bar_chart(data, title, output_path):
     plt.savefig(output_path, dpi=300, bbox_inches='tight', pad_inches=0.5)  # Increased padding
     plt.close()
 
+def create_environmental_preferences_stacked_chart(data_dict, title, output_path):
+    """
+    Create a stacked horizontal bar chart for environmental preference questions
+    
+    Args:
+        data_dict (dict): Dictionary with question names as keys and data series as values
+        title (str): Chart title
+        output_path (str): Path to save the output image
+    """
+    # Define the standard Likert scale labels in order
+    likert_labels = [
+        "1 - Definitely not",
+        "2 - Probably not", 
+        "3 - Maybe",
+        "4 - Probably yes",
+        "5 - Definitely yes"
+    ]
+    
+    # Create a matrix to store percentages for each question and response
+    questions = list(data_dict.keys())
+    n_questions = len(questions)
+    
+    # Create percentage matrix
+    percentage_matrix = []
+    for question, data in data_dict.items():
+        total_responses = sum(data.values)
+        percentages = []
+        for label in likert_labels:
+            # Find matching label in data (handle slight variations)
+            matching_label = None
+            for data_label in data.index:
+                if label.split(' - ')[0] == data_label.split(' - ')[0]:  # Match the number part
+                    matching_label = data_label
+                    break
+            
+            if matching_label and matching_label in data.index:
+                percentages.append((data[matching_label] / total_responses) * 100)
+            else:
+                percentages.append(0)
+        percentage_matrix.append(percentages)
+    
+    # Convert to numpy array for easier manipulation
+    import numpy as np
+    percentage_matrix = np.array(percentage_matrix).T  # Transpose so rows = response options, cols = questions
+    
+    # Create figure with maximum width to stretch chart area to absolute maximum
+    fig_width = 24  # Even wider for maximum stretching
+    fig_height = 18  # Much taller for longer bars
+    plt.figure(figsize=(fig_width, fig_height))
+    
+    # Set font to Times New Roman
+    plt.rcParams['font.family'] = 'Times New Roman'
+    
+    # Define scientific color scheme for each question
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c']  # Scientific blue, orange, green
+    question_colors = colors[:n_questions]
+    
+    # Calculate total width for each bar (sum across questions for each response)
+    total_widths = np.sum(percentage_matrix, axis=1)
+    
+    # Find the maximum total width to scale everything to use full horizontal space
+    max_total = np.max(total_widths)
+    scale_factor = 100 / max_total  # Scale so the longest bar uses full width
+    
+    # Create bars with different lengths scaled to use full horizontal space
+    for i, (question, color) in enumerate(zip(questions, question_colors)):
+        bar_widths = percentage_matrix[:, i]
+        
+        # Scale each bar segment to use full horizontal space
+        scaled_widths = bar_widths * scale_factor
+        
+        # Calculate left positions for each bar segment
+        left_positions = np.zeros(len(likert_labels))
+        for j in range(i):
+            left_positions += percentage_matrix[:, j] * scale_factor
+        
+        plt.barh(range(len(likert_labels)), scaled_widths, 
+                left=left_positions, color=color, alpha=0.85, label=question,
+                height=0.6)
+    
+    # Customize the chart with even larger font sizes for PDF visibility
+    plt.yticks(range(len(likert_labels)), likert_labels, fontsize=48)  # Extra large Y-axis labels
+    plt.xticks(range(0, 101, 20), fontsize=44)  # Extra large X-axis labels with standard 100% range
+    plt.xlabel('Percentage of Responses (%)', fontsize=52, labelpad=30)  # Extra large axis labels
+    # Remove y-axis label to use that space for stretching
+    plt.title(f'{title}\n77 responses per question', fontsize=56, pad=40)  # Extra large title
+    
+    # Add legend positioned below the Y-axis labels for better space utilization
+    plt.legend(fontsize=36, loc='upper center', bbox_to_anchor=(0.5, -0.15), 
+              frameon=True, fancybox=True, shadow=True, 
+              borderpad=1.2, columnspacing=2.5, ncol=3)
+    
+    # Add percentage labels on bars with clean positioning (no background boxes)
+    for i, (question, color) in enumerate(zip(questions, question_colors)):
+        bar_widths = percentage_matrix[:, i]
+        
+        # Scale each bar segment to use full horizontal space
+        scaled_widths = bar_widths * scale_factor
+        
+        # Calculate left positions for each bar segment
+        left_positions = np.zeros(len(likert_labels))
+        for j in range(i):
+            left_positions += percentage_matrix[:, j] * scale_factor
+        
+        for j, (y_pos, percentage, scaled_width) in enumerate(zip(range(len(likert_labels)), percentage_matrix[:, i], scaled_widths)):
+            if percentage > 0:  # Only show label if there's a value
+                x_pos = left_positions[j] + scaled_width / 2
+                # Use uniform white color for all labels for consistency
+                plt.text(x_pos, y_pos, f'{percentage:.1f}%', 
+                        ha='center', va='center', fontsize=34, 
+                        color='white', weight='bold')
+    
+    # Add grid for better readability
+    plt.grid(True, axis='x', alpha=0.3, linestyle='-', linewidth=0.8)
+    
+    # Remove gray background and ensure clean appearance
+    plt.gca().set_facecolor('white')
+    plt.gcf().set_facecolor('white')
+    
+    # Set axis limits to make bars spread horizontally as much as possible
+    plt.xlim(0, 100)  # Standard 100% scale
+    plt.ylim(-0.5, len(likert_labels) - 0.5)  # Proper Y spacing to prevent overlap
+    
+    # Adjust subplot to stretch chart area to absolute maximum width
+    plt.subplots_adjust(bottom=0.25, left=0.001, right=0.999)
+    plt.savefig(output_path, dpi=300, bbox_inches='tight', pad_inches=1.0, 
+                facecolor='white', edgecolor='none')
+    plt.close()
+
 def process_multiple_choice_responses(df, column):
     """
     Process multiple choice responses from a DataFrame column
