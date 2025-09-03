@@ -1,0 +1,204 @@
+# Question Definitions Configuration
+# Centralized question definitions for survey analysis
+
+demographics:
+  age_distribution:
+    column: "Which age group do you belong to?"
+    title: "Age Distribution"
+    chart_type: "horizontal_bar"
+    output: "demographics/age_distribution.png"
+    multiple_choice: false
+  
+  professional_groups:
+    column: "Which of the following best describes your current role in your organization?"
+    title: "Professional Groups Distribution"
+    chart_type: "horizontal_bar"
+    output: "demographics/professional_groups.png"
+    multiple_choice: false
+  
+  business_domain:
+    column: "In which business domain are you primarily working currently?"
+    title: "Business Domain Distribution"
+    chart_type: "horizontal_bar"
+    output: "demographics/business_domain.png"
+    multiple_choice: false
+
+usage_patterns:
+  primary_reasons:
+    column: "What are your primary reasons for using LLM chatbots? (please select all that apply)"
+    title: "Primary Reasons for Using LLM Chatbots"
+    chart_type: "horizontal_bar"
+    output: "usage/primary_reasons.png"
+    multiple_choice: true
+    create_stacked: true
+  
+  ai_services:
+    column: "What types of conversational AI services do you use? (please select all that apply)"
+    title: "Types of Conversational AI Services Used"
+    chart_type: "horizontal_bar"
+    output: "usage/ai_services.png"
+    multiple_choice: true
+  
+  usage_frequency:
+    column: "How frequently do you use conversational AI tools? "
+    title: "Usage Frequency of Conversational AI Tools"
+    chart_type: "horizontal_bar"
+    output: "usage/usage_frequency.png"
+    multiple_choice: false
+  
+  daily_usage_time:
+    column: "Roughly how much time do you spend actively using such tools or interacting with LLMs on a typical day?"
+    title: "Daily Time Spent Using LLM Tools"
+    chart_type: "horizontal_bar"
+    output: "usage/daily_usage_time.png"
+    multiple_choice: false
+    is_time_data: true
+
+environmental_impact:
+  concern_level:
+    column: "On a scale of 1–5, how concerned are you about the environmental impact of technology in general?"
+    title: "Level of Concern About Environmental Impact of Technology"
+    chart_type: "likert_scale"
+    output: "environmental/individual/concern_level.png"
+    multiple_choice: false
+    is_likert: true
+    scale_type: "concern"
+    question_id: "Q11"
+  
+  energy_optimization_agreement:
+    column: "Do you agree that LLM chatbots should generally be optimised to reduce energy consumption?"
+    title: "Agreement with Optimizing LLMs for Energy Efficiency"
+    chart_type: "likert_scale"
+    output: "environmental/individual/energy_optimization_agreement.png"
+    multiple_choice: false
+    is_likert: true
+    scale_type: "agreement"
+    question_id: "Q15"
+  
+  impact_importance:
+    column: "On a scale of 1–5, how important is the environmental impact of conversational AI in your decision to use any such services?"
+    title: "Importance of Environmental Impact in Usage Decisions"
+    chart_type: "likert_scale"
+    output: "environmental/individual/impact_importance.png"
+    multiple_choice: false
+    is_likert: true
+    scale_type: "importance"
+    question_id: "Q17"
+
+environmental_preferences:
+  eco_mode_interest:
+    column: 'Would you like LLM chatbots to provide an "Eco Mode" that reduces computational power for less demanding queries?'
+    title: "Interest in Eco Mode Feature"
+    chart_type: "likert_scale"
+    output: "environmental/individual/eco_mode_interest.png"
+    multiple_choice: false
+    is_likert: true
+    scale_type: "preference"
+    question_id: "Q18"
+  
+  eco_friendly_preference:
+    column: "Would you prefer to use an LLM chatbot that demonstrates a smaller carbon footprint, even if it is slower or less feature-rich?"
+    title: "Preference for Eco-Friendly LLMs Despite Limitations"
+    chart_type: "likert_scale"
+    output: "environmental/individual/eco_friendly_preference.png"
+    multiple_choice: false
+    is_likert: true
+    scale_type: "preference"
+    question_id: "Q19"
+  
+  energy_info_importance:
+    column: "How important is it for you to see energy consumption information related to your conversational AI usage?"
+    title: "Importance of Energy Consumption Information"
+    chart_type: "likert_scale"
+    output: "environmental/individual/energy_info_importance.png"
+    multiple_choice: false
+    is_likert: true
+    scale_type: "importance"
+    question_id: "Q20"
+  
+  energy_info_influence:
+    column: "If such usage information was provided, would it influence how you use LLM chatbots? "
+    title: "Potential Influence of Energy Usage Information"
+    chart_type: "likert_scale"
+    output: "environmental/individual/energy_info_influence.png"
+    multiple_choice: false
+    is_likert: true
+    scale_type: "preference"
+    question_id: "Q21"
+  
+  ai_transparency:
+    column: "Currently, AI companies don't disclose a lot of information about the energy consumption of their models. Do you agree that AI companies should be more transparent about the environmental impact of their models and products?"
+    title: "Support for AI Transparency"
+    chart_type: "likert_scale"
+    output: "environmental/individual/ai_transparency.png"
+    multiple_choice: false
+    is_likert: true
+    scale_type: "agreement"
+    question_id: "Q16"
+
+# Grouped charts configuration
+grouped_charts:
+  group1_concern_importance:
+    title: "Environmental Attitudes: Concern vs Importance"
+    output: "environmental/grouped/concern_importance.png"
+    questions:
+      - "concern_level"
+      - "impact_importance"
+    chart_type: "stacked_horizontal"
+  
+  group2_agreement:
+    title: "Environmental Agreement: Energy Optimization & Transparency"
+    output: "environmental/grouped/agreement.png"
+    questions:
+      - "energy_optimization_agreement"
+      - "ai_transparency"
+    chart_type: "stacked_horizontal"
+  
+  group3_importance:
+    title: "Environmental Importance: AI Usage & Energy Information"
+    output: "environmental/grouped/importance.png"
+    questions:
+      - "impact_importance"
+      - "energy_info_importance"
+    chart_type: "stacked_horizontal"
+  
+  group4_preference:
+    title: "Environmental Preferences: Eco Mode, Trade-offs & Influence"
+    output: "environmental/grouped/preference.png"
+    questions:
+      - "eco_mode_interest"
+      - "eco_friendly_preference"
+      - "energy_info_influence"
+    chart_type: "stacked_horizontal"
+
+# Combined charts configuration
+combined_charts:
+  all_environmental:
+    title: "Environmental Attitudes and Preferences"
+    output: "environmental/combined/all_environmental.png"
+    questions:
+      - "concern_level"
+      - "impact_importance"
+      - "energy_optimization_agreement"
+      - "eco_mode_interest"
+      - "eco_friendly_preference"
+      - "ai_transparency"
+      - "energy_info_importance"
+      - "energy_info_influence"
+    chart_type: "stacked_horizontal"
+    use_question_ids: true
+  
+  all_environmental_no_ids:
+    title: "Environmental Attitudes and Preferences"
+    output: "environmental/combined/all_environmental_no_ids.png"
+    questions:
+      - "concern_level"
+      - "impact_importance"
+      - "energy_optimization_agreement"
+      - "eco_mode_interest"
+      - "eco_friendly_preference"
+      - "ai_transparency"
+      - "energy_info_importance"
+      - "energy_info_influence"
+    chart_type: "stacked_horizontal"
+    use_question_ids: false

@@ -1,0 +1,30 @@
+Theme,Quote
+Alternative Solutions,Automate certain requests to just a Google search.
+Alternative Solutions,"I think it is a matter of awareness. Decision support should help. What is better: running one brief stint of high-energy text translation, or having the PC turned on for two hours doing it by hand? Or: what are good alternatives, for example, could in this case the translation be done by a tool with lower consumption, like DeepL? Being able to see how much energy each option consumes would make people more aware and make deliberate sustainability choices."
+Alternative Solutions,"Hybrid system -> depending on the question: normal internet search vs LLMs, automatic oder user could choose with a single interface or smaller, efficienter models"
+Usage Scope/Limitations,"There should be a limitation of the use of AI for pure entertainment. Using AI for meaningful purposes should be okay, but it should not be used just for fun (lots of memes and generated videos out there on social media which are only used for entertainment and quick likes."
+Bias/Social Impact,"There should be a limitation of the use of AI for pure entertainment. Using AI for meaningful purposes should be okay, but it should not be used just for fun (lots of memes and generated videos out there on social media which are only used for entertainment and quick likes."
+Bias/Social Impact,"Not generating non-sense LinkedIn posts or comments????
+
+Data Centres should run on green energy, at least."
+Bias/Social Impact,"Yes I feel we can work a lot in the side is infrastructure improvement, scalable systems, algorithm management and strategic use. 
+For example we can keep running a specific set of connections for the query instead of running the whole system, we can also use sparse model. Algorithm optimisation is something which we can use, (MoE), reinforcement learning. When it comes to energy, green energy could be used for data centres and efficient cooling could be done."
+Pricing/Responsibility,it is not only a LLM question
+Pricing/Responsibility,Technologies with a high negative impact should be taxed higher; technologies with a small footprint should be taxed less. The tax should be put upon the end customer; the service provider should be obliged to provide a small footprint versiob. That way a lot of customer will choose the small footprint version.
+Pricing/Responsibility,I feel like a lot of people don't know that prompts cost so much energy. For most it seems like a better google search and no one thinks about how much energy a google search takes.
+Infrastructure/Green Energy,Green politics is not important
+Infrastructure/Green Energy,"Not generating non-sense LinkedIn posts or comments????
+
+Data Centres should run on green energy, at least."
+Infrastructure/Green Energy,"Yes I feel we can work a lot in the side is infrastructure improvement, scalable systems, algorithm management and strategic use. 
+For example we can keep running a specific set of connections for the query instead of running the whole system, we can also use sparse model. Algorithm optimisation is something which we can use, (MoE), reinforcement learning. When it comes to energy, green energy could be used for data centres and efficient cooling could be done."
+Model/Algorithm Efficiency,"Yes I feel we can work a lot in the side is infrastructure improvement, scalable systems, algorithm management and strategic use. 
+For example we can keep running a specific set of connections for the query instead of running the whole system, we can also use sparse model. Algorithm optimisation is something which we can use, (MoE), reinforcement learning. When it comes to energy, green energy could be used for data centres and efficient cooling could be done."
+Model/Algorithm Efficiency,just don't put it into every use case of software there is
+Model/Algorithm Efficiency,"Hybrid system -> depending on the question: normal internet search vs LLMs, automatic oder user could choose with a single interface or smaller, efficienter models"
+Awareness/Transparency,"I think it is a matter of awareness. Decision support should help. What is better: running one brief stint of high-energy text translation, or having the PC turned on for two hours doing it by hand? Or: what are good alternatives, for example, could in this case the translation be done by a tool with lower consumption, like DeepL? Being able to see how much energy each option consumes would make people more aware and make deliberate sustainability choices."
+Awareness/Transparency,AIs are biased based on the training data. This has a massive influence on the social and individual dimension of sustainability. There should be transparency here as well.
+Awareness/Transparency,"Visualizing it could help, i mean creating awareness in the tool. But in the end, the companies need to offset the footprint or something"
+Policy/Tax/Offsets,Technologies with a high negative impact should be taxed higher; technologies with a small footprint should be taxed less. The tax should be put upon the end customer; the service provider should be obliged to provide a small footprint versiob. That way a lot of customer will choose the small footprint version.
+Policy/Tax/Offsets,(Last question) I don't know how a fee could help in this case
+Policy/Tax/Offsets,"Visualizing it could help, i mean creating awareness in the tool. But in the end, the companies need to offset the footprint or something"

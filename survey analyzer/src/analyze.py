@@ -470,6 +470,124 @@ def analyze_survey_data(excel_path, output_dir):
             all_combined_output_path
         )
         print(f"Created combined environmental chart: {all_combined_output_path}")
+        
+        # Create the new chart without question IDs and with N=77 in X-axis
+        # Note: Function create_combined_environmental_chart_no_ids was removed during refactoring
+        # no_ids_output_path = os.path.join(output_dir, 'environmental', 'all_environmental_combined_no_ids.png')
+        # create_combined_environmental_chart_no_ids(
+        #     all_environmental_data, 
+        #     'Environmental Attitudes and Preferences', 
+        #     no_ids_output_path
+        # )
+        # print(f"Created combined environmental chart (no IDs): {no_ids_output_path}")
+        
+        # Create separate charts by label type groups
+        print("\nCreating separate charts by label type groups...")
+        
+        # Group 1: Concern chart (Q11)
+        concern_questions = [
+            {
+                'column': 'On a scale of 1–5, how concerned are you about the environmental impact of technology in general?',
+                'title': 'Environmental concern (technology)'
+            }
+        ]
+        
+        concern_data = {}
+        for question in concern_questions:
+            try:
+                data = clean_likert_responses(df, question['column'])
+                concern_data[question['title']] = data
+                print(f"  - {question['title']}: {sum(data.values)} responses")
+            except KeyError as e:
+                print(f"  - Error: Column '{question['column']}' not found")
+        
+        if concern_data:
+            concern_output_path = os.path.join(output_dir, 'environmental', 'concern_chart.png')
+            # Note: Function create_concern_chart was removed during refactoring
+            # create_concern_chart(concern_data, 'Environmental Concern', concern_output_path)
+        
+        # Group 2: Agreement chart (Q15, Q16)
+        agreement_questions = [
+            {
+                'column': 'Do you agree that LLM chatbots should generally be optimised to reduce energy consumption?',
+                'title': 'Agreement with energy optimization'
+            },
+            {
+                'column': 'Currently, AI companies don\'t disclose a lot of information about the energy consumption of their models. Do you agree that AI companies should be more transparent about the environmental impact of their models and products?',
+                'title': 'Support for AI transparency'
+            }
+        ]
+        
+        agreement_data = {}
+        for question in agreement_questions:
+            try:
+                data = clean_likert_responses(df, question['column'])
+                agreement_data[question['title']] = data
+                print(f"  - {question['title']}: {sum(data.values)} responses")
+            except KeyError as e:
+                print(f"  - Error: Column '{question['column']}' not found")
+        
+        if agreement_data:
+            agreement_output_path = os.path.join(output_dir, 'environmental', 'agreement_chart.png')
+            # Note: Function create_agreement_chart was removed during refactoring
+            # create_agreement_chart(agreement_data, 'Environmental Agreement', agreement_output_path)
+        
+        # Group 3: Importance chart (Q17, Q20)
+        importance_questions = [
+            {
+                'column': 'On a scale of 1–5, how important is the environmental impact of conversational AI in your decision to use any such services?',
+                'title': 'Environmental importance (AI usage)'
+            },
+            {
+                'column': 'How important is it for you to see energy consumption information related to your conversational AI usage?',
+                'title': 'Importance of energy information'
+            }
+        ]
+        
+        importance_data = {}
+        for question in importance_questions:
+            try:
+                data = clean_likert_responses(df, question['column'])
+                importance_data[question['title']] = data
+                print(f"  - {question['title']}: {sum(data.values)} responses")
+            except KeyError as e:
+                print(f"  - Error: Column '{question['column']}' not found")
+        
+        if importance_data:
+            importance_output_path = os.path.join(output_dir, 'environmental', 'importance_chart.png')
+            # Note: Function create_importance_chart was removed during refactoring
+            # create_importance_chart(importance_data, 'Environmental Importance', importance_output_path)
+        
+        # Group 4: Preference chart (Q18, Q19, Q21)
+        preference_questions = [
+            {
+                'column': 'Would you like LLM chatbots to provide an "Eco Mode" that reduces computational power for less demanding queries?',
+                'title': 'Support for Eco Mode feature'
+            },
+            {
+                'column': 'Would you prefer to use an LLM chatbot that demonstrates a smaller carbon footprint, even if it is slower or less feature-rich?',
+                'title': 'Preference for eco-friendly chatbots'
+            },
+            {
+                'column': 'If such usage information was provided, would it influence how you use LLM chatbots? ',
+                'title': 'Behavioral influence of energy info'
+            }
+        ]
+        
+        preference_data = {}
+        for question in preference_questions:
+            try:
+                data = clean_likert_responses(df, question['column'])
+                preference_data[question['title']] = data
+                print(f"  - {question['title']}: {sum(data.values)} responses")
+            except KeyError as e:
+                print(f"  - Error: Column '{question['column']}' not found")
+        
+        if preference_data:
+            preference_output_path = os.path.join(output_dir, 'environmental', 'preference_chart.png')
+            # Note: Function create_preference_chart was removed during refactoring
+            # create_preference_chart(preference_data, 'Environmental Preferences', preference_output_path)
+        
     else:
         print("No environmental data found for combined chart")
 

@@ -1,46 +1,54 @@
-# LLM Survey Analyzer
+# Survey Analyzer
 
-A Python-based tool for analyzing and visualizing survey data about LLM (Large Language Model) chatbot usage patterns.
 
 ## Project Structure
+
 ```
-.
-├── data/               # Data directory
-│   └── data.xlsx      # Survey response data
-├── src/               # Source code
-│   ├── visualize.py   # Visualization functions
-│   └── analyze.py     # Data analysis functions
-├── output/            # Generated visualizations
-│   └── plots/         # Plot images
-├── requirements.txt   # Project dependencies
-└── README.md         # Project documentation
+survey analyzer/
+├── config/                          # Configuration files
+│   ├── chart_styles.yaml           # Styling parameters
+│   └── questions.yaml              # Question definitions
+├── src/
+│   ├── utils/                      # Utility modules
+│   │   ├── styling.py              # Chart styling management
+│   │   ├── file_manager.py         # Output organization
+│   │   └── config_loader.py        # Configuration loading
+│   ├── visualization/              # Chart classes
+│   │   └── base.py                 # Base chart functionality
+│   ├── analyze.py                  # Main analysis script
+│   ├── visualize.py                # Chart creation functions
+│   └── text_analysis.py            # NLP analysis
+├── data/
+│   └── data.xlsx                   # Survey data
+├── output/                         # Generated outputs
+│   ├── plots/                      # Visualizations
+│   │   ├── demographics/           # Demographics charts
+│   │   ├── environmental/          # Environmental charts
+│   │   │   ├── individual/         # Single question charts
+│   │   │   ├── grouped/            # Multi-question charts
+│   │   │   └── combined/           # All-in-one charts
+│   │   └── usage/                  # Usage pattern charts
+│   ├── data/                       # Processed data files
+│   └── reports/                    # Analysis reports
+└── README.md
 ```
 
-## Setup
 
-1. Create a virtual environment:
+### Prerequisites
+- Python 3.8+
+- Required packages (see requirements.txt)
+
+### Installation
 ```bash
-python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-```
+# Clone or download the project
+cd survey-analyzer
 
-2. Install dependencies:
-```bash
+# Install dependencies
 pip install -r requirements.txt
-```
 
-## Usage
-
-1. Place your survey data Excel file in the `data/` directory
-2. Run the analysis:
-```bash
+# Run the analysis
 python src/analyze.py
+
+# Run text analysis
+python src/text_analysis.py
 ```
-
-The script will generate visualizations in the `output/plots/` directory.
-
-## Dependencies
-
-- pandas==2.1.4
-- matplotlib==3.8.2
-- openpyxl==3.1.2 

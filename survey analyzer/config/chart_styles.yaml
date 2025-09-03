@@ -1,0 +1,113 @@
+# Chart Styling Configuration
+# Centralized styling parameters for all visualizations
+
+# Font settings
+font:
+  family: "Times New Roman"
+  sizes:
+    title: 56
+    xlabel: 52
+    ylabel: 52
+    legend: 36
+    tick_labels: 35
+    y_axis_labels: 70
+    bar_labels: 34
+
+# Color schemes
+colors:
+  # Light blue shades for scientific look
+  light_blue:
+    - "#E3F2FD"
+    - "#BBDEFB" 
+    - "#90CAF9"
+    - "#64B5F6"
+    - "#42A5F5"
+  
+  # Scientific color scheme
+  scientific:
+    - "#1f77b4"  # Blue
+    - "#ff7f0e"  # Orange
+    - "#2ca02c"  # Green
+  
+  # Fallback blue
+  fallback: "#1f77b4"
+
+# Chart dimensions
+dimensions:
+  # Base figure sizes
+  base_width: 32
+  base_height: 24
+  
+  # Specific chart heights
+  single_question_height: 8
+  two_question_height: 12
+  three_question_height: 16
+  
+  # Bar settings
+  bar_height:
+    single: 0.2
+    multi: 0.6
+    individual_in_multi: 0.3
+
+# Layout settings
+layout:
+  # Subplot adjustments for maximum stretching
+  subplot_adjust:
+    left: 0.001
+    right: 0.999
+    bottom: 0.1
+    top: 0.95
+    bottom_with_legend: 0.2
+    top_with_legend: 0.85
+  
+  # Legend positioning
+  legend:
+    position: "upper center"
+    bbox_anchor: [0.5, -0.15]
+    ncol: 5
+    frameon: true
+    fancybox: true
+    shadow: true
+
+# Output settings
+output:
+  dpi: 300
+  facecolor: "white"
+  bbox_inches: "tight"
+
+# Likert scale labels
+likert_scales:
+  concern:
+    - "1 - Not at all concerned"
+    - "2 - Slightly concerned"
+    - "3 - Moderately concerned"
+    - "4 - Very concerned"
+    - "5 - Extremely concerned"
+  
+  importance:
+    - "1 - Not at all important"
+    - "2 - Slightly important"
+    - "3 - Moderately important"
+    - "4 - Very important"
+    - "5 - Extremely important"
+  
+  agreement:
+    - "1 - Strongly disagree"
+    - "2 - Disagree"
+    - "3 - Neither agree nor disagree"
+    - "4 - Agree"
+    - "5 - Strongly agree"
+  
+  preference:
+    - "1 - Definitely not"
+    - "2 - Probably not"
+    - "3 - Maybe"
+    - "4 - Probably yes"
+    - "5 - Definitely yes"
+  
+  normalized:
+    - "1 - Low"
+    - "2 - Below Average"
+    - "3 - Average"
+    - "4 - Above Average"
+    - "5 - High"
