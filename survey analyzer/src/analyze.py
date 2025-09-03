@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-from visualize import create_horizontal_bar_chart, create_stacked_horizontal_bar_chart, create_environmental_preferences_stacked_chart, process_multiple_choice_responses
+from visualize import create_horizontal_bar_chart, create_stacked_horizontal_bar_chart, create_environmental_preferences_stacked_chart, process_multiple_choice_responses, create_group1_stacked_bar_chart, create_group2_stacked_bar_chart, create_group3_stacked_bar_chart, create_combined_environmental_chart
 
 def clean_likert_responses(df, column):
     """
@@ -262,6 +262,119 @@ def analyze_survey_data(excel_path, output_dir):
                 print(f"Error: Column '{question['column']}' not found in the data")
                 print(f"Available columns: {', '.join(df.columns)}")
     
+    # Create Group 1 stacked bar chart (Q1 and Q4)
+    print("\nCreating Group 1 stacked bar chart...")
+    group1_questions = [
+        {
+            'column': 'On a scale of 1–5, how concerned are you about the environmental impact of technology in general?',
+            'title': 'On a scale of 1–5, how concerned are you about the environmental impact of technology in general?'
+        },
+        {
+            'column': 'On a scale of 1–5, how important is the environmental impact of conversational AI in your decision to use any such services?',
+            'title': 'On a scale of 1–5, how important is the environmental impact of conversational AI in your decision to use any such services?'
+        }
+    ]
+    
+    # Collect data for Group 1 questions
+    group1_data = {}
+    for question in group1_questions:
+        try:
+            data = clean_likert_responses(df, question['column'])
+            group1_data[question['title']] = data
+            print(f"  - {question['title']}: {sum(data.values)} responses")
+        except KeyError as e:
+            print(f"  - Error: Column '{question['column']}' not found")
+    
+    # Create the Group 1 chart
+    if group1_data:
+        group1_output_path = os.path.join(output_dir, 'environmental/group1_stacked_bar_chart.png')
+        create_group1_stacked_bar_chart(
+            group1_data, 
+            'Environmental Attitudes: Concern vs Importance', 
+            group1_output_path
+        )
+        print(f"Created Group 1 stacked bar chart: {group1_output_path}")
+    else:
+        print("No Group 1 data found for stacked bar chart")
+
+    # Create Group 2 stacked bar chart (Q2, Q5, Q6)
+    print("\nCreating Group 2 stacked bar chart...")
+    group2_questions = [
+        {
+            'column': 'Do you agree that LLM chatbots should generally be optimised to reduce energy consumption?',
+            'title': 'Large Language Model chatbots should be optimised to reduce energy consumption.'
+        },
+        {
+            'column': 'Would you like LLM chatbots to provide an "Eco Mode" that reduces computational power for less demanding queries?',
+            'title': 'I would use an \'Eco Mode\' in a chatbot that consumes less energy for simple tasks.'
+        },
+        {
+            'column': 'Would you prefer to use an LLM chatbot that demonstrates a smaller carbon footprint, even if it is slower or less feature-rich?',
+            'title': 'I would prefer a chatbot with a smaller carbon footprint, even if it is slower or less feature-rich.'
+        }
+    ]
+    
+    # Collect data for Group 2 questions
+    group2_data = {}
+    for question in group2_questions:
+        try:
+            data = clean_likert_responses(df, question['column'])
+            group2_data[question['title']] = data
+            print(f"  - {question['title']}: {sum(data.values)} responses")
+        except KeyError as e:
+            print(f"  - Error: Column '{question['column']}' not found")
+    
+    # Create the Group 2 chart
+    if group2_data:
+        group2_output_path = os.path.join(output_dir, 'environmental/group2_stacked_bar_chart.png')
+        create_group2_stacked_bar_chart(
+            group2_data, 
+            'Environmental Preferences: Agreement with Eco-Friendly Features', 
+            group2_output_path
+        )
+        print(f"Created Group 2 stacked bar chart: {group2_output_path}")
+    else:
+        print("No Group 2 data found for stacked bar chart")
+
+    # Create Group 3 stacked bar chart (Q3, Q7, Q8)
+    print("\nCreating Group 3 stacked bar chart...")
+    group3_questions = [
+        {
+            'column': 'Currently, AI companies don\'t disclose a lot of information about the energy consumption of their models. Do you agree that AI companies should be more transparent about the environmental impact of their models and products?',
+            'title': 'AI companies should be more transparent about the environmental impact of their systems.'
+        },
+        {
+            'column': 'How important is it for you to see energy consumption information related to your conversational AI usage?',
+            'title': 'It is important for me to see information about the energy consumption of a chatbot.'
+        },
+        {
+            'column': 'If such usage information was provided, would it influence how you use LLM chatbots? ',
+            'title': 'Information about energy usage would influence how I use a chatbot.'
+        }
+    ]
+    
+    # Collect data for Group 3 questions
+    group3_data = {}
+    for question in group3_questions:
+        try:
+            data = clean_likert_responses(df, question['column'])
+            group3_data[question['title']] = data
+            print(f"  - {question['title']}: {sum(data.values)} responses")
+        except KeyError as e:
+            print(f"  - Error: Column '{question['column']}' not found")
+    
+    # Create the Group 3 chart
+    if group3_data:
+        group3_output_path = os.path.join(output_dir, 'environmental/group3_stacked_bar_chart.png')
+        create_group3_stacked_bar_chart(
+            group3_data, 
+            'Environmental Transparency: Importance and Influence of Energy Information', 
+            group3_output_path
+        )
+        print(f"Created Group 3 stacked bar chart: {group3_output_path}")
+    else:
+        print("No Group 3 data found for stacked bar chart")
+
     # Create combined environmental preferences chart (only questions with same Likert scale)
     print("\nCreating combined environmental preferences chart...")
     environmental_questions = [
@@ -298,6 +411,65 @@ def analyze_survey_data(excel_path, output_dir):
             combined_output_path
         )
         print(f"Created combined environmental preferences chart: {combined_output_path}")
+    else:
+        print("No environmental data found for combined chart")
+
+    # Create combined chart with all environmental questions (shortened labels, light blue shades)
+    print("\nCreating combined environmental chart with all questions...")
+    all_environmental_questions = [
+        {
+            'column': 'On a scale of 1–5, how concerned are you about the environmental impact of technology in general?',
+            'title': '(Q11) Environmental concern (technology)'
+        },
+        {
+            'column': 'On a scale of 1–5, how important is the environmental impact of conversational AI in your decision to use any such services?',
+            'title': '(Q17) Environmental importance (AI usage)'
+        },
+        {
+            'column': 'Do you agree that LLM chatbots should generally be optimised to reduce energy consumption?',
+            'title': '(Q15) Agreement with energy optimization'
+        },
+        {
+            'column': 'Would you like LLM chatbots to provide an "Eco Mode" that reduces computational power for less demanding queries?',
+            'title': '(Q18) Support for Eco Mode feature'
+        },
+        {
+            'column': 'Would you prefer to use an LLM chatbot that demonstrates a smaller carbon footprint, even if it is slower or less feature-rich?',
+            'title': '(Q19) Preference for eco-friendly chatbots'
+        },
+        {
+            'column': 'Currently, AI companies don\'t disclose a lot of information about the energy consumption of their models. Do you agree that AI companies should be more transparent about the environmental impact of their models and products?',
+            'title': '(Q16) Support for AI transparency'
+        },
+        {
+            'column': 'How important is it for you to see energy consumption information related to your conversational AI usage?',
+            'title': '(Q20) Importance of energy information'
+        },
+        {
+            'column': 'If such usage information was provided, would it influence how you use LLM chatbots? ',
+            'title': '(Q21) Behavioral influence of energy info'
+        }
+    ]
+    
+    # Collect data for all environmental questions
+    all_environmental_data = {}
+    for question in all_environmental_questions:
+        try:
+            data = clean_likert_responses(df, question['column'])
+            all_environmental_data[question['title']] = data
+            print(f"  - {question['title']}: {sum(data.values)} responses")
+        except KeyError as e:
+            print(f"  - Error: Column '{question['column']}' not found")
+    
+    # Create the combined chart
+    if all_environmental_data:
+        all_combined_output_path = os.path.join(output_dir, 'environmental/all_environmental_combined.png')
+        create_combined_environmental_chart(
+            all_environmental_data, 
+            'Environmental Attitudes and Preferences', 
+            all_combined_output_path
+        )
+        print(f"Created combined environmental chart: {all_combined_output_path}")
     else:
         print("No environmental data found for combined chart")
 

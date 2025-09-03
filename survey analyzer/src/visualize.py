@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 def create_stacked_horizontal_bar_chart(data, title, output_path):
     """
@@ -382,4 +383,372 @@ def process_multiple_choice_responses(df, column):
         all_responses.extend(reasons)
     
     # Count frequencies and sort by count (descending)
-    return pd.Series(all_responses).value_counts() 
+    return pd.Series(all_responses).value_counts()
+
+def create_group1_stacked_bar_chart(data_dict, title, output_path):
+    """
+    Create a stacked horizontal bar chart for Group 1 (Q1 and Q4) with Likert scale responses
+    Similar styling to the Environmental Preferences Comparison chart
+    
+    Args:
+        data_dict (dict): Dictionary with question titles as keys and data series as values
+        title (str): Chart title
+        output_path (str): Path to save the output image
+    """
+    # Set font to Times New Roman
+    plt.rcParams['font.family'] = 'Times New Roman'
+    
+    # Create figure with stretched dimensions (similar to reference chart)
+    fig_width = 32
+    fig_height = 24
+    plt.figure(figsize=(fig_width, fig_height))
+    
+    # Define colors for each question (scientific color scheme)
+    colors = ['#1f77b4', '#ff7f0e']  # Blue and orange for the two questions
+    
+    # Get questions and their data
+    questions = list(data_dict.keys())
+    question_data = list(data_dict.values())
+    
+    # Create y-axis labels (Likert scale values 1-5, ordered from 5 to 1)
+    y_labels = ['5 - Extremely', '4 - Very', '3 - Moderately', '2 - Slightly', '1 - Not at all']
+    
+    # Calculate percentages for each Likert value across both questions
+    likert_percentages = {}
+    for likert_val in range(1, 6):
+        likert_percentages[likert_val] = []
+        for data in question_data:
+            # Find the corresponding value in the data by looking for the numeric value
+            data_index = data.index
+            matching_indices = [idx for idx in data_index if idx.startswith(f"{likert_val} -")]
+            
+            if matching_indices:
+                # Get the count for this Likert value
+                count = data[matching_indices[0]]
+                total = data.sum()
+                percentage = (count / total * 100)
+            else:
+                percentage = 0
+            likert_percentages[likert_val].append(percentage)
+    
+    # Create horizontal stacked bars
+    left = np.zeros(5)  # 5 Likert scale values
+    bar_height = 0.6
+    
+    # Plot each question as a segment
+    for i, (question, color) in enumerate(zip(questions, colors)):
+        values = []
+        for likert_val in range(1, 6):
+            values.append(likert_percentages[likert_val][i])
+        
+        # Create the horizontal bar segment
+        bars = plt.barh(range(5), values, left=left, 
+                       color=color, label=question, height=bar_height, 
+                       edgecolor='white', linewidth=0.5)
+        
+        # Add percentage labels on bars
+        for j, (bar, value) in enumerate(zip(bars, values)):
+            if value > 3:  # Only show labels for segments > 3%
+                plt.text(bar.get_x() + bar.get_width()/2, 
+                        bar.get_y() + bar.get_height()/2, 
+                        f'{value:.1f}%', 
+                        ha='center', va='center', 
+                        fontsize=30, fontweight='bold', color='white')
+        
+        left += values
+    
+    # Customize the chart (similar to reference chart)
+    plt.xlabel('Percentage of Responses (%)', fontsize=30, fontweight='bold')
+    # plt.ylabel('Response Options', fontsize=30, fontweight='bold')  # Commented out to save space
+    plt.title(f'{title}\n77 responses per question', fontsize=30, fontweight='bold', pad=20)
+    
+    # Set y-axis labels (Likert scale, ordered from 5 to 1)
+    plt.yticks(range(5), y_labels, fontsize=30)
+    plt.xticks(fontsize=30)
+    
+    # Set x-axis limits
+    plt.xlim(0, 100)
+    
+    # Add legend below the chart with full question text
+    plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.15), ncol=1, 
+              fontsize=30, frameon=True, fancybox=True, shadow=True)
+    
+    # Stretch the chart to use maximum horizontal space, with more bottom space for full question text
+    plt.subplots_adjust(left=0.001, right=0.999, bottom=0.2, top=0.95)
+    
+    # Save the chart
+    plt.savefig(output_path, dpi=300, bbox_inches='tight', facecolor='white')
+    plt.close()
+    
+    print(f"Created Group 1 stacked horizontal bar chart: {output_path}")
+
+def create_group2_stacked_bar_chart(data_dict, title, output_path):
+    """
+    Create a grouped horizontal bar chart for Group 2 (Q2, Q5, Q6) with Likert scale responses
+    Each question gets its own set of bars, properly scaled to 100%
+    
+    Args:
+        data_dict (dict): Dictionary with question titles as keys and data series as values
+        title (str): Chart title
+        output_path (str): Path to save the output image
+    """
+    # Set font to Times New Roman
+    plt.rcParams['font.family'] = 'Times New Roman'
+    
+    # Create figure with stretched dimensions (similar to Group 1 chart)
+    fig_width = 32
+    fig_height = 24
+    plt.figure(figsize=(fig_width, fig_height))
+    
+    # Define colors for each question (scientific color scheme)
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c']  # Blue, orange, green for the three questions
+    
+    # Get questions and their data
+    questions = list(data_dict.keys())
+    question_data = list(data_dict.values())
+    
+    # Create y-axis labels (Likert scale values 1-5, ordered from 5 to 1)
+    y_labels = ['5 - Strongly agree', '4 - Agree', '3 - Neither agree nor disagree', '2 - Disagree', '1 - Strongly disagree']
+    
+    # Create grouped horizontal bars - each question gets its own set of bars
+    bar_height = 0.2
+    bar_spacing = 0.25
+    
+    # For each question, create a set of bars
+    for q_idx, (question, data, color) in enumerate(zip(questions, question_data, colors)):
+        # Calculate percentages for this question
+        total = data.sum()
+        percentages = []
+        
+        for likert_val in range(1, 6):
+            # Find the corresponding value in the data
+            data_index = data.index
+            matching_indices = [idx for idx in data_index if idx.startswith(f"{likert_val} -")]
+            
+            if matching_indices:
+                count = data[matching_indices[0]]
+                percentage = (count / total * 100)
+            else:
+                percentage = 0
+            percentages.append(percentage)
+        
+        # Create bars for this question
+        y_positions = [i + (q_idx - 1) * bar_spacing for i in range(5)]
+        
+        bars = plt.barh(y_positions, percentages, height=bar_height, 
+                       color=color, label=question, edgecolor='white', linewidth=0.5)
+        
+        # Add percentage labels on bars
+        for bar, percentage in zip(bars, percentages):
+            if percentage > 3:  # Only show labels for segments > 3%
+                plt.text(bar.get_width()/2, bar.get_y() + bar.get_height()/2, 
+                        f'{percentage:.1f}%', 
+                        ha='center', va='center', 
+                        fontsize=30, fontweight='bold', color='white')
+    
+    # Customize the chart (similar to Group 1 chart)
+    plt.xlabel('Percentage of Responses (%)', fontsize=30, fontweight='bold')
+    # plt.ylabel('Response Options', fontsize=30, fontweight='bold')  # Commented out to save space
+    plt.title(f'{title}\n77 responses per question', fontsize=30, fontweight='bold', pad=20)
+    
+    # Set y-axis labels (Likert scale, ordered from 5 to 1)
+    # Position labels at the center of each group
+    y_tick_positions = [i for i in range(5)]
+    plt.yticks(y_tick_positions, y_labels, fontsize=30)
+    plt.xticks(fontsize=30)
+    
+    # Set x-axis limits
+    plt.xlim(0, 100)
+    
+    # Add legend below the chart with full question text
+    plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.15), ncol=1, 
+              fontsize=30, frameon=True, fancybox=True, shadow=True)
+    
+    # Stretch the chart to use maximum horizontal space, with more bottom space for full question text
+    plt.subplots_adjust(left=0.001, right=0.999, bottom=0.2, top=0.95)
+    
+    # Save the chart
+    plt.savefig(output_path, dpi=300, bbox_inches='tight', facecolor='white')
+    plt.close()
+    
+    print(f"Created Group 2 grouped horizontal bar chart: {output_path}")
+
+def create_group3_stacked_bar_chart(data_dict, title, output_path):
+    """
+    Create a stacked horizontal bar chart for Group 3 (Q3, Q7, Q8) with Likert scale responses
+    Questions on Y-axis, each question gets one stacked bar with all Likert responses as segments
+    
+    Args:
+        data_dict (dict): Dictionary with question titles as keys and data series as values
+        title (str): Chart title
+        output_path (str): Path to save the output image
+    """
+    # Set font to Times New Roman
+    plt.rcParams['font.family'] = 'Times New Roman'
+    
+    # Create figure with stretched dimensions (same as Group 1 and 2 charts)
+    fig_width = 32
+    fig_height = 24
+    plt.figure(figsize=(fig_width, fig_height))
+    
+    # Define colors for each Likert scale value (scientific color scheme)
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd']  # Blue, orange, green, red, purple
+    
+    # Get questions and their data
+    questions = list(data_dict.keys())
+    question_data = list(data_dict.values())
+    
+    # Create horizontal stacked bars - each question gets one bar
+    left = np.zeros(len(questions))  # Number of questions
+    bar_height = 0.6
+    
+    # Plot each Likert scale value as a segment
+    for likert_val in range(1, 6):
+        values = []
+        for data in question_data:
+            # Find the corresponding value in the data by looking for the numeric value
+            data_index = data.index
+            matching_indices = [idx for idx in data_index if idx.startswith(f"{likert_val} -")]
+            
+            if matching_indices:
+                # Get the count for this Likert value
+                count = data[matching_indices[0]]
+                total = data.sum()
+                percentage = (count / total * 100)
+            else:
+                percentage = 0
+            values.append(percentage)
+        
+        # Create the horizontal bar segment
+        bars = plt.barh(range(len(questions)), values, left=left, 
+                       color=colors[likert_val-1], height=bar_height, 
+                       edgecolor='white', linewidth=0.5)
+        
+        # Add percentage labels on bars
+        for j, (bar, value) in enumerate(zip(bars, values)):
+            if value > 3:  # Only show labels for segments > 3%
+                plt.text(bar.get_x() + bar.get_width()/2, 
+                        bar.get_y() + bar.get_height()/2, 
+                        f'{value:.1f}%', 
+                        ha='center', va='center', 
+                        fontsize=30, fontweight='bold', color='white')
+        
+        left += values
+    
+    # Customize the chart
+    plt.xlabel('Percentage of Responses (%)', fontsize=30, fontweight='bold')
+    # plt.ylabel('Questions', fontsize=30, fontweight='bold')  # Commented out to save space
+    plt.title(f'{title}\n77 responses per question', fontsize=30, fontweight='bold', pad=20)
+    
+    # Set y-axis labels (questions)
+    plt.yticks(range(len(questions)), questions, fontsize=30)
+    plt.xticks(fontsize=30)
+    
+    # Set x-axis limits
+    plt.xlim(0, 100)
+    
+    # Create legend for Likert scale values
+    likert_labels = ['1 - Strongly disagree', '2 - Disagree', '3 - Neither agree nor disagree', 
+                     '4 - Agree', '5 - Strongly agree']
+    
+    # Add legend below the chart with Likert scale labels
+    plt.legend(likert_labels, loc='upper center', bbox_to_anchor=(0.5, -0.15), ncol=3, 
+              fontsize=30, frameon=True, fancybox=True, shadow=True)
+    
+    # Stretch the chart to use maximum horizontal space, with more bottom space for legend
+    plt.subplots_adjust(left=0.001, right=0.999, bottom=0.2, top=0.95)
+    
+    # Save the chart
+    plt.savefig(output_path, dpi=300, bbox_inches='tight', facecolor='white')
+    plt.close()
+    
+    print(f"Created Group 3 stacked horizontal bar chart: {output_path}")
+
+def create_combined_environmental_chart(data_dict, title, output_path):
+    """
+    Create a combined stacked horizontal bar chart for all environmental questions
+    Uses light blue shades, shorter question labels, normalized Likert scales, no header
+    
+    Args:
+        data_dict (dict): Dictionary with question titles as keys and data series as values
+        title (str): Chart title
+        output_path (str): Path to save the output image
+    """
+    # Set font to Times New Roman
+    plt.rcParams['font.family'] = 'Times New Roman'
+    
+    # Create figure with stretched dimensions
+    fig_width = 32
+    fig_height = 24
+    plt.figure(figsize=(fig_width, fig_height))
+    
+    # Define light blue shades for Likert scale values
+    colors = ['#E3F2FD', '#BBDEFB', '#90CAF9', '#64B5F6', '#42A5F5']  # Light to medium blue shades
+    
+    # Get questions and their data
+    questions = list(data_dict.keys())
+    question_data = list(data_dict.values())
+    
+    # Create horizontal stacked bars - each question gets one bar
+    left = np.zeros(len(questions))  # Number of questions
+    bar_height = 0.6
+    
+    # Plot each Likert scale value as a segment
+    for likert_val in range(1, 6):
+        values = []
+        for data in question_data:
+            # Find the corresponding value in the data by looking for the numeric value
+            data_index = data.index
+            matching_indices = [idx for idx in data_index if idx.startswith(f"{likert_val} -")]
+            
+            if matching_indices:
+                # Get the count for this Likert value
+                count = data[matching_indices[0]]
+                total = data.sum()
+                percentage = (count / total * 100)
+            else:
+                percentage = 0
+            values.append(percentage)
+        
+        # Create the horizontal bar segment
+        bars = plt.barh(range(len(questions)), values, left=left, 
+                       color=colors[likert_val-1], height=bar_height, 
+                       edgecolor='white', linewidth=0.5)
+        
+        # Add percentage labels on bars
+        for j, (bar, value) in enumerate(zip(bars, values)):
+            if value > 3:  # Only show labels for segments > 3%
+                plt.text(bar.get_x() + bar.get_width()/2, 
+                        bar.get_y() + bar.get_height()/2, 
+                        f'{value:.1f}%', 
+                        ha='center', va='center', 
+                        fontsize=35, fontweight='bold', color='black')
+        
+        left += values
+    
+    # Customize the chart
+    plt.xlabel('Percentage of Responses (%)', fontsize=35, fontweight='bold')
+    # plt.title(title, fontsize=35, fontweight='bold', pad=20)  # Removed title
+    
+    # Set y-axis labels (questions)
+    plt.yticks(range(len(questions)), questions, fontsize=35)
+    plt.xticks(fontsize=35)
+    
+    # Set x-axis limits
+    plt.xlim(0, 100)
+    
+    # Create normalized legend for Likert scale values
+    likert_labels = ['1 - Low', '2 - Below Average', '3 - Average', '4 - Above Average', '5 - High']
+    
+    # Add legend below the chart with normalized Likert scale labels
+    plt.legend(likert_labels, loc='upper center', bbox_to_anchor=(0.5, -0.15), ncol=5, 
+              fontsize=35, frameon=True, fancybox=True, shadow=True)
+    
+    # Stretch the chart to use maximum horizontal space, with more bottom space for legend
+    plt.subplots_adjust(left=0.001, right=0.999, bottom=0.2, top=0.95)
+    
+    # Save the chart
+    plt.savefig(output_path, dpi=300, bbox_inches='tight', facecolor='white')
+    plt.close()
+    
+    print(f"Created combined environmental chart: {output_path}") 
