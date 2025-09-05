@@ -1,0 +1,4 @@
+mode_name,numberOfInputTokens_count,numberOfInputTokens_mean,numberOfInputTokens_std,numberOfOutputTokens_count,numberOfOutputTokens_mean,numberOfOutputTokens_std,usageInWh_mean,usageInWh_std,usageInWh_sum
+Balanced,57,1468.9298,2964.6364,57,1532.5789,1340.0591,0.6517,0.6595,37.145
+Energy Efficient,156,387.9167,814.1887,156,1378.7756,940.3925,0.3723,0.3285,58.0839
+Performance,72,1249.9583,1526.5297,72,2275.0417,1304.8945,1.3772,0.8163,99.157
