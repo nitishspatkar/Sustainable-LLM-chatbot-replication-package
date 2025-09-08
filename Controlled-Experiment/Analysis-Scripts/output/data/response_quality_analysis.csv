@@ -1,0 +1,4 @@
+mode_name,mean,std,min,max,median
+Balanced,1506.12,1343.45,0,4827,927.5
+Energy Efficient,1378.46,940.27,33,4616,1149.0
+Performance,2273.88,1305.85,129,8202,2253.0

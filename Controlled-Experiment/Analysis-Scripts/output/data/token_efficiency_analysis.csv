@@ -1,4 +1,4 @@
-mode_name,total_tokens_mean,total_tokens_std,energy_per_token_mean,energy_per_token_std,input_output_ratio_mean,input_output_ratio_std
-Balanced,3001.5088,4024.9912,0.0003,0.0002,0.6512,1.0182
-Energy Efficient,1766.6923,1318.0865,0.0002,0.0001,0.6167,2.6052
-Performance,3525.0,2342.464,0.0004,0.0001,0.5437,0.6622
+mode_name,mean,std,min,max,median
+Balanced,29.43,74.55,0.18,355.12,4.54
+Energy Efficient,16.78,34.17,0.03,179.67,4.25
+Performance,26.72,57.29,0.28,270.45,3.33

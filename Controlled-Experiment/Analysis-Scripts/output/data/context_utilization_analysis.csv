@@ -1,0 +1,6 @@
+,historyLimit,total_tokens,total_tokens
+,first,mean,std
+mode_name,,,
+Balanced,5,3001.51,4024.99
+Energy Efficient,2,1766.69,1318.09
+Performance,10,3525.0,2342.46

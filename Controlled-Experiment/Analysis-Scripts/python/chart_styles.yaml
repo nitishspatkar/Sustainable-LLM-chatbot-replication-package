@@ -1,0 +1,108 @@
+# Chart Styling Configuration for Controlled Experiment
+# Consistent with User-Survey styling standards
+
+# Font settings
+font:
+  family: "Times New Roman"
+  sizes:
+    title: 56
+    xlabel: 52
+    ylabel: 52
+    legend: 36
+    tick_labels: 35
+    y_axis_labels: 70
+    bar_labels: 34
+
+# Color schemes
+colors:
+  # Light blue shades for scientific look
+  light_blue:
+    - "#E3F2FD"
+    - "#BBDEFB" 
+    - "#90CAF9"
+    - "#64B5F6"
+    - "#42A5F5"
+  
+  # Scientific color scheme
+  scientific:
+    - "#1f77b4"  # Blue
+    - "#ff7f0e"  # Orange
+    - "#2ca02c"  # Green
+  
+  # Mode-specific colors (consistent with experiment)
+  modes:
+    - "#2E8B57"  # Energy Efficient (Sea Green)
+    - "#FFD700"  # Balanced (Gold)
+    - "#DC143C"  # Performance (Crimson)
+  
+  # Fallback blue
+  fallback: "#1f77b4"
+
+# Chart dimensions
+dimensions:
+  # Base figure sizes
+  base_width: 32
+  base_height: 24
+  
+  # Specific chart heights
+  single_chart_height: 8
+  dual_chart_height: 12
+  quad_chart_height: 16
+  
+  # Bar settings
+  bar_height:
+    single: 0.2
+    multi: 0.6
+    individual_in_multi: 0.3
+
+# Layout settings
+layout:
+  # Subplot adjustments for maximum stretching
+  subplot_adjust:
+    left: 0.001
+    right: 0.999
+    bottom: 0.1
+    top: 0.95
+    bottom_with_legend: 0.2
+    top_with_legend: 0.85
+  
+  # Legend positioning
+  legend:
+    position: "upper center"
+    bbox_anchor: [0.5, -0.15]
+    ncol: 5
+    frameon: true
+    fancybox: true
+    shadow: true
+
+# Output settings
+output:
+  dpi: 300
+  facecolor: "white"
+  bbox_inches: "tight"
+
+# Chart-specific settings
+charts:
+  energy_consumption:
+    title: "Average Energy Consumption by Chat Mode"
+    xlabel: "Chat Mode"
+    ylabel: "Energy Consumption (Wh)"
+    colors: ["#2E8B57", "#FFD700", "#DC143C"]
+  
+  token_efficiency:
+    title: "Token Efficiency Comparison"
+    xlabel: "Chat Mode"
+    ylabel: "Tokens per Wh"
+    colors: ["#2E8B57", "#FFD700", "#DC143C"]
+  
+  temporal_patterns:
+    title: "Temporal Usage Patterns"
+    xlabel: "Time"
+    ylabel: "Usage Count"
+    colors: ["#1f77b4"]
+  
+  trade_off_scatter:
+    title: "Performance vs. Efficiency Trade-offs"
+    xlabel: "Energy Consumption (Wh)"
+    ylabel: "Response Quality"
+    colors: ["#2E8B57", "#FFD700", "#DC143C"]

@@ -1,0 +1,8 @@
+day_of_week,prompts_count,avg_energy,most_common_mode
+Friday,32,0.47733593750000003,0
+Monday,66,0.8215316666666668,2
+Saturday,6,1.0061416666666667,2
+Sunday,1,0.3253,1
+Thursday,67,0.38981343283582087,0
+Tuesday,50,0.7586026530612244,0
+Wednesday,64,0.8631071875,0
